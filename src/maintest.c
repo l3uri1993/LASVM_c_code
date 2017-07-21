@@ -621,7 +621,7 @@ int main(void)
     printf("la test\r\n");
     printf("_______\r\n");
 
-    libsvm_load_model("model.model");// load model
+    libsvm_load_model("model.dat");// load model
 
     load_data_file("test.trn"); // load test data
 
