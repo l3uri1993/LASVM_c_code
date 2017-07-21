@@ -1,4 +1,4 @@
-#define TESTo
+#define TEST_PERDEFINIRELASCIARESOLO_TEST
 #ifdef TEST
 #include "main.h"
 
