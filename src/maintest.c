@@ -1,4 +1,4 @@
-#define TEST_PERDEFINIRELASCIARESOLO_TEST
+#define TEST
 #ifdef TEST
 #include "main.h"
 
@@ -16,7 +16,7 @@ int_array_t Y;                   // labels
 float_array_t alpha;            // alpha_i, SV weights
 float b0;                        // threshold
 int use_b0=1;                     // use threshold via constraint \sum a_i y_i =0
-int kernel_type=RBF;              // LINEAR, POLY, RBF or SIGMOID kernels
+int kernel_type=LINEAR;              // LINEAR, POLY, RBF or SIGMOID kernels
 float degree=3,kgamma=0.005,coef0=0;// kernel params
 float_array_t x_square;         // norms of input vectors, used for RBF
 float_array_t xsv_square;        // norms of test vectors, used for RBF
@@ -519,7 +519,7 @@ void test(char *output_name)
 
     // rows = predictions (0 or 1)
     // cols = labels (0 or 1)
-    int contingency_table[2][2] = {{0,0},{0,0}};
+    //int contingency_table[2][2] = {{0,0},{0,0}};
 
     for(i=0; i<m; i++) // iterate through trainig data
     {
@@ -542,24 +542,24 @@ void test(char *output_name)
         if(y_th==Y.array[i]) acc++;
 
         // update contingency table
-        contingency_table[ (y_th>0)?1:0 ][ (Y.array[i]>0)?1:0 ]++;
+        //contingency_table[ (y_th>0)?1:0 ][ (Y.array[i]>0)?1:0 ]++;
     }
 
     // print to stdout
     printf("accuracy: %g%% (%d/%d)\r\n",(acc/m)*100,((int)acc),m);
-    printf("contingency table:\r\n");
-    printf("%10s%10s%10s%10s\r\n","","","labels","");
-    printf("%10s%10s%10s%10s\r\n","","","-1","+1");
-    printf("%10s%10s%10d%10d\r\n","pred","-1",contingency_table[0][0],contingency_table[0][1]);
-    printf("%10s%10s%10d%10d\r\n","","+1",contingency_table[1][0],contingency_table[1][1]);
+    //printf("contingency table:\r\n");
+    //printf("%10s%10s%10s%10s\r\n","","","labels","");
+    //printf("%10s%10s%10s%10s\r\n","","","-1","+1");
+    //printf("%10s%10s%10d%10d\r\n","pred","-1",contingency_table[0][0],contingency_table[0][1]);
+    //printf("%10s%10s%10d%10d\r\n","","+1",contingency_table[1][0],contingency_table[1][1]);
 
     // print to file
     fprintf(fp,"accuracy: %g%% (%d/%d)\r\n",(acc/m)*100,((int)acc),m);
-    fprintf(fp,"contingency table:\r\n");
-    fprintf(fp,"%10s%10s%10s%10s\r\n","","","labels","");
-    fprintf(fp,"%10s%10s%10s%10s\r\n","","","-1","+1");
-    fprintf(fp,"%10s%10s%10d%10d\r\n","pred","-1",contingency_table[0][0],contingency_table[0][1]);
-    fprintf(fp,"%10s%10s%10d%10d\r\n","","+1",contingency_table[1][0],contingency_table[1][1]);
+    //fprintf(fp,"contingency table:\r\n");
+    //fprintf(fp,"%10s%10s%10s%10s\r\n","","","labels","");
+    //fprintf(fp,"%10s%10s%10s%10s\r\n","","","-1","+1");
+    //fprintf(fp,"%10s%10s%10d%10d\r\n","pred","-1",contingency_table[0][0],contingency_table[0][1]);
+    //fprintf(fp,"%10s%10s%10d%10d\r\n","","+1",contingency_table[1][0],contingency_table[1][1]);
 
     fclose(fp);
 }
@@ -623,7 +623,7 @@ int main(void)
 
     libsvm_load_model("model.dat");// load model
 
-    load_data_file("test.trn"); // load test data
+    load_data_file("test.tst"); // load test data
 
     test("result.txt");
 }

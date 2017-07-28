@@ -1,4 +1,4 @@
-#define TRAIN
+#define TRAINo
 #ifdef TRAIN
 #include "main.h"
 
@@ -300,7 +300,10 @@ int libsvm_save_model(const char *model_file_name)
             if (j==0 && Y.array[i]==-1) continue;
             if (j==1 && Y.array[i]==1) continue;
             if (alpha.array[i]*Y.array[i]< alpha_tol) continue; // not an SV
-            if ((int)alpha.array[i] != 1 && (int)alpha.array[i] != -1) continue;
+            if ((int)alpha.array[i] > 0 )
+            	alpha.array[i] = 1;
+            else
+            	alpha.array[i] = -1;
 
             fprintf(fp, "%d ",(int)alpha.array[i]);
 
@@ -452,7 +455,7 @@ void train_online(char *model_file_name)
     lasvm_kcache_t *kcache=lasvm_kcache_create(kernel, NULL);
     lasvm_kcache_set_maximum_size(kcache, cache_size*1024);
     lasvm_t *sv=lasvm_create(kcache,use_b0,C*C_pos,C*C_neg);
-    printf("set cache size %d\n",cache_size);
+    printf("set cache size %d Kb \n",cache_size);
 
     // everything is new when we start
     for(i=0;i<m;i++)
@@ -493,7 +496,7 @@ void train_online(char *model_file_name)
             }
             else
                 if(verbosity==1)
-                    if( (i%100)==0){ fprintf(stdout, "..%d",i); fflush(stdout); }
+                    //if( (i%100)==0){ fprintf(stdout, "..%d",i); fflush(stdout); }
 
             l=(int) lasvm_get_l(sv);
             for(k=0;k<(int)select_size.used;k++)
